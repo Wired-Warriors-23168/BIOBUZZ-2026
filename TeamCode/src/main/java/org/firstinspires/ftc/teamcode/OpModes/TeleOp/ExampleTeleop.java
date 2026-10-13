@@ -41,17 +41,16 @@ import org.firstinspires.ftc.teamcode.Subsystems.ExampleFlywheel;
 @Disabled
 public class ExampleTeleop extends LinearOpMode {
 
-
-    //declare all of your subsystems
-
-    private ExampleFlywheel flywheel = new ExampleFlywheel();
-    private ExampleElevator elevator = new ExampleElevator();
-
     @Override
     public void runOpMode() {
 
+        //declare all of your subsystems
+        ExampleFlywheel flywheel = new ExampleFlywheel();
+        ExampleElevator elevator = new ExampleElevator();
+
 
         // this loop will run continuously while the robot is enabled
+        waitForStart();
         while (opModeIsActive()) {
 
             // set up buttons to activate certain subsystem functions
