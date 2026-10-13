@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.controller.PIDFController;
 
 
@@ -26,10 +27,10 @@ public class ExampleFlywheel {
 
 
     // set up subsystem hardware here
-    public ExampleFlywheel() {
+    public ExampleFlywheel(HardwareMap hwMap) {
 
         // Declare and set up motor behavior
-        flywheel = hardwareMap.get(DcMotorEx.class, "example config name");
+        flywheel = hwMap.get(DcMotorEx.class, "example config name");
         //whatever you named the device in the control hub config
 
         flywheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

@@ -45,8 +45,8 @@ public class ExampleTeleop extends LinearOpMode {
     public void runOpMode() {
 
         //declare all of your subsystems
-        ExampleFlywheel flywheel = new ExampleFlywheel();
-        ExampleElevator elevator = new ExampleElevator();
+        ExampleFlywheel flywheel = new ExampleFlywheel(hardwareMap);
+        ExampleElevator elevator = new ExampleElevator(hardwareMap);
 
 
         // this loop will run continuously while the robot is enabled
