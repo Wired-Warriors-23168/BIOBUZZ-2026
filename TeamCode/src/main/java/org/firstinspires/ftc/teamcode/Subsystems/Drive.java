@@ -41,6 +41,8 @@ public class Drive {
         frontRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
         backRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
 
+        // encoder ticks per second, will be very small values
+//        frontRightDrive.setVelocityPIDFCoefficients(5, 0, 0, 2);
     }
     
     public void updateDrive(double lefty, double leftx, double rightx) {

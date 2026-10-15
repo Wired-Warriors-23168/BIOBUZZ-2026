@@ -11,15 +11,8 @@ import com.seattlesolvers.solverslib.controller.PIDFController;
 
 public class ExampleFlywheel {
 
-    //give the subsystem a set of states it could be in
-    public enum State {
-        SHOOTING, IDLE, OFF
-    }
-    private State flywheelState;
-
+    //your motor
     private DcMotorEx flywheel;
-    // continuously spinning motors use a PIDF controller, position motors use a PID controller.
-    private PIDFController flywheelPIDF;
 
     //keep all values at the top of the program for easier tuning
     double shootingSpeed = 20;
@@ -33,59 +26,35 @@ public class ExampleFlywheel {
         flywheel = hwMap.get(DcMotorEx.class, "example config name");
         //whatever you named the device in the control hub config
 
-        flywheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // this is specific to what you are using the motor for
 
         flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         // whether it coasts down at zero power or brakes
 
         flywheel.setDirection(DcMotorEx.Direction.FORWARD);
-        flywheelPIDF = new PIDFController(5, 0, 0, 1);
+        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
         // be very careful with PID values, start low and tune up
     }
 
-    //create public methods to set the subsystem into each different state
+    //create public methods for all the function you want the subsystems to do, these will be ran in the opmode
     public void shoot() {
-        flywheelState = State.SHOOTING;
+        flywheel.setVelocity(shootingSpeed);
     }
     public void idle() {
-        flywheelState = State.IDLE;
+        flywheel.setVelocity(idleSpeed);
     }
     public void off() {
-        flywheelState = State.OFF;
-    }
-
-    // create a method for each state, this is where all the actual code and logic for the subsystem is written
-    private void runShooting() {
-        double targetFlywheel = flywheelPIDF.calculate(flywheel.getVelocity(), shootingSpeed);
-        flywheel.setPower(targetFlywheel);
-    }
-
-    private void runIdle() {
-        double targetFlywheel = flywheelPIDF.calculate(flywheel.getVelocity(), idleSpeed);
-        flywheel.setPower(targetFlywheel);
-    }
-
-    private void runOff() {
         flywheel.setPower(0);
     }
 
-    // an update function that will run continuously, this is where the different state methods are actually ran
-    // add all telemetry in this update class as well
+    // a if info from this subsystem is needed in other files, write a method like this and call it in those other files
+    public double getFlywheelSpeed() {
+        return flywheel.getVelocity();
+    }
+
+    // an update function that will run continuously, not needed here
     public void update() {
 
-        switch (flywheelState) {
-            case SHOOTING:
-                runShooting();
-                break;
-            case IDLE:
-                runIdle();
-                break;
-            case OFF:
-                runOff();
-                break;
-        }
-
-        telemetry.addData("flywheel speed", flywheel.getVelocity());
     }
 }

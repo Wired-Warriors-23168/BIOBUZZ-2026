@@ -36,7 +36,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.ExampleElevator;
 import org.firstinspires.ftc.teamcode.Subsystems.ExampleFlywheel;
 
 
-//give the opmode a name and make sure it is not @Disabled, this stops the OPmode from being sent to the control hub
+//give the opmode a name and make sure it is not @Disabled, it stops the OPmode from being sent to the control hub
 @TeleOp(name="Example Teleop", group="Linear OpMode")
 @Disabled
 public class ExampleTeleop extends LinearOpMode {
