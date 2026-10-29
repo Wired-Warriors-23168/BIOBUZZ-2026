@@ -43,7 +43,6 @@ public class  Intake{
     }
 
     public double getIntakeSpeed() {return intake.getVelocity();}
-    public double getFlywheelData() {return  intake.getCurrentPosition();}
     public void updateFlywheelSpeedUp() {
         intakeSpeed = intakeSpeed + 50;
     }

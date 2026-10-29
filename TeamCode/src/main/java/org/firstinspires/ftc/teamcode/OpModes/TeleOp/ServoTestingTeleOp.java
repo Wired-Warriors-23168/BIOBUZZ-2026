@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Subsystems.Feeder;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 
 @TeleOp(name="intake Test", group="Linear OpMode")
 public class ServoTestingTeleOp extends LinearOpMode {
@@ -14,6 +14,7 @@ public class ServoTestingTeleOp extends LinearOpMode {
     public void runOpMode() {
 
         Intake intake = new Intake(hardwareMap);
+        Feeder feeder = new Feeder(hardwareMap);
 
         waitForStart();
 
@@ -24,7 +25,13 @@ public class ServoTestingTeleOp extends LinearOpMode {
             if (gamepad1.b) {
                 intake.off();
             }
-            telemetry.addData("intake  speed", intake.getFlywheelSpeed());
+            if (gamepad1.left_trigger>0.1) {
+                feeder.off();
+            }
+            if (gamepad1.left_trigger<0.1) {
+                feeder.on();
+            }
+            telemetry.addData("intake  speed", intake.getIntakeSpeed());
             telemetry.update();
         }
     }
