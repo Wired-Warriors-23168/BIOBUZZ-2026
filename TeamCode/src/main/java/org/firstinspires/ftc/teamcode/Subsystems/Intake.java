@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
-public class  Intake{
+public class Intake {
 
     private DcMotorEx intake;
     private CRServo left;

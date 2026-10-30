@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -8,25 +7,48 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Feeder {
 
-    private DcMotorEx feeder;
-    double feederSpeed = 2000;
+    private DcMotorEx feedermotor;
+    private DcMotorEx gatemotor;
+    double feederSpeed = 1200;
+    double gateSpeed = 2000;
+
 
     public Feeder(HardwareMap hwMap) {
 
-        feeder = hwMap.get(DcMotorEx.class, "feeder");
+        feedermotor = hwMap.get(DcMotorEx.class, "feeder");
 
-        feeder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        feedermotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        feeder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        feedermotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        feeder.setDirection(DcMotorEx.Direction.FORWARD);
+        feedermotor.setDirection(DcMotorEx.Direction.FORWARD);
         //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
-        feeder.setVelocity(1.0);
+        feedermotor.setVelocity(feederSpeed);
+
+        gatemotor = hwMap.get(DcMotorEx.class, "gate");
+
+        gatemotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        gatemotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+        gatemotor.setDirection(DcMotorEx.Direction.FORWARD);
+        //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
+        gatemotor.setVelocity(gateSpeed);
     }
-    public void off() {
-        feeder.setPower(0);
+    public void feederOff() {
+        feedermotor.setPower(0);
     }
     public void on() {
-        feeder.setPower(1.0);
+        feedermotor.setVelocity(feederSpeed);
+    }
+    public void gateoff() {
+        gatemotor.setPower(0);
+    }
+    public void gateon() {
+        gatemotor.setVelocity(gateSpeed);
+    }
+
+    public double getFeederSpeed() {
+        return feedermotor.getVelocity();
     }
 }

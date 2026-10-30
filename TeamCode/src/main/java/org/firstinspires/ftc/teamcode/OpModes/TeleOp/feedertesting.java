@@ -14,16 +14,31 @@ public class feedertesting extends LinearOpMode {
     public void runOpMode() {
 
         Feeder feeder = new Feeder(hardwareMap);
+        Intake intake = new Intake(hardwareMap);
 
         waitForStart();
 
         while (opModeIsActive()) {
             if (gamepad1.left_trigger>0.1) {
-                feeder.off();
+                feeder.feederOff();
             }
             if (gamepad1.left_trigger<0.1) {
                 feeder.on();
             }
+            if (gamepad1.right_trigger>0.1) {
+                feeder.gateon();
+            }
+            if (gamepad1.right_trigger<0.1) {
+                feeder.gateoff();
+            }
+            if (gamepad1.right_bumper) {
+                intake.on();
+            }
+            if (gamepad1.left_bumper) {
+                intake.off();
+            }
+
+            telemetry.addData("feeder speed", feeder.getFeederSpeed());
             telemetry.update();
         }
     }

@@ -25,12 +25,6 @@ public class ServoTestingTeleOp extends LinearOpMode {
             if (gamepad1.b) {
                 intake.off();
             }
-            if (gamepad1.left_trigger>0.1) {
-                feeder.off();
-            }
-            if (gamepad1.left_trigger<0.1) {
-                feeder.on();
-            }
             telemetry.addData("intake  speed", intake.getIntakeSpeed());
             telemetry.update();
         }
