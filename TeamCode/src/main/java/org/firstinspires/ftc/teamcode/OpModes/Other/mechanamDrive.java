@@ -27,15 +27,15 @@ public class mechanamDrive extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "leftRear");
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "leftFrontDrive");
-        rightDrive = hardwareMap.get(DcMotor.class, "rightRear");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFrontDrive");
+        leftDrive  = hardwareMap.get(DcMotor.class, "back_left_drive");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "front_left_drive");
+        rightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();

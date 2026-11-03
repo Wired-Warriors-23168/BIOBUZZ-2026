@@ -22,6 +22,7 @@ public class FieldCentricDrive {
     double backRightSpeed;
     IMU imu;
 
+    boolean isRamen = true;
     double maxwheelspeed = 2400;
 
 
@@ -37,11 +38,17 @@ public class FieldCentricDrive {
         frontRightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         backRightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
-        frontLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
-        backLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
-        frontRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
-
+        if (isRamen) {
+            frontLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
+            backLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
+            frontRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
+            backRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        } else {
+            frontLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+            backLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
+            frontRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
+            backRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        }
         // encoder ticks per second, will be very small values
 //        frontRightDrive.setVelocityPIDFCoefficients(5, 0, 0, 2);
 
@@ -78,7 +85,7 @@ public class FieldCentricDrive {
         double backLeftPower = forward - right + rotate;
 
         double maxPower = 1.0;
-        double maxVelocity = 2400.0;
+        double maxVelocity = 1600;
 
         maxPower = Math.max(maxPower, Math.abs(frontLeftPower));
         maxPower = Math.max(maxPower, Math.abs(frontRightPower));
@@ -89,6 +96,10 @@ public class FieldCentricDrive {
         frontRightDrive.setVelocity(maxVelocity * (frontRightPower / maxPower));
         backLeftDrive.setVelocity(maxVelocity * (backLeftPower / maxPower));
         backRightDrive.setVelocity(maxVelocity * (backRightPower / maxPower));
+    }
+
+    public void resetYaw() {
+        imu.resetYaw();
     }
     public double[] getVelocities() {
         return new double[] {frontLeftDrive.getVelocity(), frontRightDrive.getVelocity(), backLeftDrive.getVelocity(), backRightDrive.getVelocity()};
