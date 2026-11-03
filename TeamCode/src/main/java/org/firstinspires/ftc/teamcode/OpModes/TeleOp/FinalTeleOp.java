@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Feeder;
+import org.firstinspires.ftc.teamcode.Subsystems.FieldCentricDrive;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 
@@ -17,10 +18,18 @@ public class FinalTeleOp extends LinearOpMode {
         Feeder feeder = new Feeder(hardwareMap);
         Intake intake = new Intake(hardwareMap);
         Shooter flywheel = new Shooter(hardwareMap);
+        FieldCentricDrive drive = new FieldCentricDrive(hardwareMap);
 
         waitForStart();
 
         while (opModeIsActive()) {
+
+            drive.updateDrive(
+                    gamepad1.left_stick_y,
+                    gamepad1.left_stick_x,
+                    gamepad1.right_stick_x
+            );
+
             if (gamepad2.left_trigger>0.1) {
                 feeder.on();
             }
