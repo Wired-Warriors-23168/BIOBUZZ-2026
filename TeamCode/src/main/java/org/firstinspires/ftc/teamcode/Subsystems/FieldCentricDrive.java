@@ -22,11 +22,10 @@ public class FieldCentricDrive {
     double backRightSpeed;
     IMU imu;
 
-    boolean isRamen = true;
     double maxwheelspeed = 2400;
 
 
-    public FieldCentricDrive(HardwareMap hwMap) {
+    public FieldCentricDrive(HardwareMap hwMap, boolean isRamen) {
 
         frontLeftDrive = hwMap.get(DcMotorEx .class,"front_left_drive");
         backLeftDrive = hwMap.get(DcMotorEx .class,"back_left_drive");
@@ -49,6 +48,37 @@ public class FieldCentricDrive {
             frontRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
             backRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
         }
+        // encoder ticks per second, will be very small values
+//        frontRightDrive.setVelocityPIDFCoefficients(5, 0, 0, 2);
+
+
+        imu = hwMap.get(IMU.class, "imu");
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection =
+                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
+        RevHubOrientationOnRobot.UsbFacingDirection usbDirection =
+                RevHubOrientationOnRobot.UsbFacingDirection.UP;
+
+        RevHubOrientationOnRobot orientationOnRobot = new
+                RevHubOrientationOnRobot(logoDirection, usbDirection);
+        imu.initialize(new IMU.Parameters(orientationOnRobot));
+    }
+    public FieldCentricDrive(HardwareMap hwMap) {
+
+        frontLeftDrive = hwMap.get(DcMotorEx .class,"front_left_drive");
+        backLeftDrive = hwMap.get(DcMotorEx .class,"back_left_drive");
+        frontRightDrive = hwMap.get(DcMotorEx .class,"front_right_drive");
+        backRightDrive = hwMap.get(DcMotorEx .class,"back_right_drive");
+
+        frontLeftDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backLeftDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        frontRightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backRightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+
+        frontLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        frontRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
+
         // encoder ticks per second, will be very small values
 //        frontRightDrive.setVelocityPIDFCoefficients(5, 0, 0, 2);
 

@@ -6,21 +6,23 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Feeder;
 import org.firstinspires.ftc.teamcode.Subsystems.FieldCentricDrive;
+import org.firstinspires.ftc.teamcode.Subsystems.Hood;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 
 @TeleOp(name="FinalTeleOp", group="Linear OpMode")
 public class FinalTeleOp extends LinearOpMode {
 
+    boolean isRamen = true;
 
     @Override
     public void runOpMode() {
 
-        Feeder feeder = new Feeder(hardwareMap);
-        Intake intake = new Intake(hardwareMap);
-        Shooter flywheel = new Shooter(hardwareMap);
-        FieldCentricDrive drive = new FieldCentricDrive(hardwareMap);
-
+        Feeder feeder = new Feeder(hardwareMap, isRamen);
+        Intake intake = new Intake(hardwareMap, isRamen);
+        Shooter flywheel = new Shooter(hardwareMap, isRamen);
+        FieldCentricDrive drive = new FieldCentricDrive(hardwareMap, isRamen);
+        Hood hood = new Hood(hardwareMap, isRamen);
         waitForStart();
 
         while (opModeIsActive()) {
@@ -50,6 +52,12 @@ public class FinalTeleOp extends LinearOpMode {
             if (gamepad2.right_trigger<0.1) {
                 feeder.gateoff();
                 feeder.feederOff();
+            }
+            if (gamepad2.dpad_left) {
+                hood.pollenPos();
+            }
+            if (gamepad2.dpad_right) {
+                hood.nectarPos();
             }
             if (gamepad2.y) {
                 flywheel.flywheelon();

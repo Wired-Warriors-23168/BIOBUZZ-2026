@@ -29,6 +29,27 @@ public class Intake {
         left.setDirection(CRServo.Direction.REVERSE);
         right.setDirection(CRServo.Direction.FORWARD);
     }
+
+    public Intake(HardwareMap hwMap, boolean isRamen) {
+
+        intake = hwMap.get(DcMotorEx.class, "intakeRoller");
+        left = hwMap.get(CRServo.class, "leftIntake");
+        right = hwMap.get(CRServo.class, "rightIntake");
+
+        intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
+
+        if (isRamen) {
+            intake.setDirection(DcMotorEx.Direction.FORWARD);
+            left.setDirection(CRServo.Direction.REVERSE);
+            right.setDirection(CRServo.Direction.FORWARD);
+        } else {
+            intake.setDirection(DcMotorEx.Direction.FORWARD);
+            left.setDirection(CRServo.Direction.REVERSE);
+            right.setDirection(CRServo.Direction.FORWARD);
+        }
+    }
     
     public void off() {
 

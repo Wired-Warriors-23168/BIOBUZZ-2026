@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
@@ -11,30 +12,45 @@ public class Feeder {
     private DcMotorEx gatemotor;
     double feederSpeed = 600;
     double gateSpeed = 800;
-    double reverseSpeed = -200;
+    double reverseSpeed = -500;
 
+
+    public Feeder(HardwareMap hwMap, boolean isRamen) {
+
+        feedermotor = hwMap.get(DcMotorEx.class, "feeder");
+        feedermotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        feedermotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
+
+        gatemotor = hwMap.get(DcMotorEx.class, "gate");
+        gatemotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        gatemotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+        if (isRamen) {
+            feedermotor.setDirection(DcMotorEx.Direction.FORWARD);
+            gatemotor.setDirection(DcMotorEx.Direction.FORWARD);
+        } else {
+            feedermotor.setDirection(DcMotorEx.Direction.REVERSE);
+            gatemotor.setDirection(DcMotorEx.Direction.REVERSE);
+        }
+        //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
+    }
 
     public Feeder(HardwareMap hwMap) {
 
         feedermotor = hwMap.get(DcMotorEx.class, "feeder");
-
         feedermotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         feedermotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-
-        feedermotor.setDirection(DcMotorEx.Direction.FORWARD);
         //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
-        feedermotor.setVelocity(feederSpeed);
 
         gatemotor = hwMap.get(DcMotorEx.class, "gate");
-
         gatemotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         gatemotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-
-        gatemotor.setDirection(DcMotorEx.Direction.FORWARD);
         //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
-        gatemotor.setVelocity(gateSpeed);
+
+            feedermotor.setDirection(DcMotorEx.Direction.FORWARD);
+            gatemotor.setDirection(DcMotorEx.Direction.FORWARD);
+
     }
     public void feederOff() {
         feedermotor.setPower(0);
