@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
@@ -10,9 +9,9 @@ public class Feeder {
 
     private DcMotorEx feedermotor;
     private DcMotorEx gatemotor;
-    double feederSpeed = 600;
+    double feederSpeed = 1000;
     double gateSpeed = 800;
-    double reverseSpeed = -500;
+    double reverseSpeed = -800;
 
 
     public Feeder(HardwareMap hwMap, boolean isRamen) {

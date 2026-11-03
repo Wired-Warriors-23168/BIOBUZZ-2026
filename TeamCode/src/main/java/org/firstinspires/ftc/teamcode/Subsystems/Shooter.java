@@ -28,7 +28,7 @@ public class Shooter {
 
         flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
+        flywheel.setVelocityPIDFCoefficients(100, 0, 0, 17.8);
     }
 
        public Shooter(HardwareMap hwMap) {
@@ -36,7 +36,7 @@ public class Shooter {
             flywheel.setDirection(DcMotorEx.Direction.REVERSE);
             flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
+            flywheel.setVelocityPIDFCoefficients(100, 0, 0, 17.8);
         }
 
     public void shoot() {
@@ -66,8 +66,5 @@ public class Shooter {
     }
     public void bigFlywheel() {
         flywheel.setVelocity(shootingSpeed);
-    }
-    public void bigFlywheelOff() {
-        flywheel.setPower(0);
     }
 }
