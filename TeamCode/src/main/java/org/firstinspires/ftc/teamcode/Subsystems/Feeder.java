@@ -9,8 +9,9 @@ public class Feeder {
 
     private DcMotorEx feedermotor;
     private DcMotorEx gatemotor;
-    double feederSpeed = 1200;
-    double gateSpeed = 2000;
+    double feederSpeed = 600;
+    double gateSpeed = 800;
+    double reverseSpeed = -200;
 
 
     public Feeder(HardwareMap hwMap) {
@@ -47,7 +48,9 @@ public class Feeder {
     public void gateon() {
         gatemotor.setVelocity(gateSpeed);
     }
-
+    public void reverse() {
+        gatemotor.setVelocity(reverseSpeed);
+    }
     public double getFeederSpeed() {
         return feedermotor.getVelocity();
     }
