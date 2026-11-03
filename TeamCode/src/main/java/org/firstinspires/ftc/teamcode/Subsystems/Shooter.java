@@ -17,17 +17,27 @@ public class Shooter {
     double idleSpeed = 1020;
 
 
-    public Shooter(HardwareMap hwMap) {
-
+    public Shooter(HardwareMap hwMap, boolean isRamen) {
         flywheel = hwMap.get(DcMotorEx.class, "flywheel");
 
+        if (isRamen) {
+            flywheel.setDirection(DcMotorEx.Direction.REVERSE);
+        } else {
+            flywheel.setDirection(DcMotorEx.Direction.REVERSE);
+        }
+
         flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-
-        flywheel.setDirection(DcMotorEx.Direction.REVERSE);
-    //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
+        //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
     }
+
+       public Shooter(HardwareMap hwMap) {
+           flywheel = hwMap.get(DcMotorEx.class, "flywheel");
+            flywheel.setDirection(DcMotorEx.Direction.REVERSE);
+            flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
+        }
 
     public void shoot() {
         flywheel.setVelocity(shootingSpeed);
