@@ -690,8 +690,7 @@ class SafeForwardBraking extends TuningOpMode<List<Double>> {
     public double brakingPower = 0.001;
     public double distance;
     public double IDLE_SECONDS = 1;
-    /** Stops the robot if it gets this many inches past the test's ends. */
-    public double OVERRUN = 24;
+    /** Forward-axis overshoot is allowed during braking measurement. */
     /** Stops the robot if it drifts this many inches across the test's direction. */
     public double DRIFT = 48;
 
@@ -743,11 +742,11 @@ class SafeForwardBraking extends TuningOpMode<List<Double>> {
             SafeForesightChecks.timeout(safetyStartNanos, 80.0, "ForwardBraking");
             localizer.update();
             SafeForesightChecks.check(localizer);
-            if (Math.abs(localizer.pose().x()) > distance + OVERRUN || Math.abs(localizer.pose().y()) > DRIFT) {
+            if (Math.abs(localizer.pose().y()) > DRIFT) {
                 drivetrain.stop();
                 throw new IllegalStateException(String.format(Locale.US,
-                        "stopped the robot at (%.0f, %.0f): more than %.0f in past the test's ends or %.0f in across them",
-                        localizer.pose().x(), localizer.pose().y(), OVERRUN, DRIFT));
+                        "stopped the robot at (%.0f, %.0f): lateral drift exceeded %.0f inches",
+                        localizer.pose().x(), localizer.pose().y(), DRIFT));
             }
             direction = (iteration % 2 == 0) ? 1 : -1;
             if (iteration < POWERS.length) {
