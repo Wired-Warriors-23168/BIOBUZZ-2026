@@ -56,29 +56,33 @@ public class FinalTeleOp extends LinearOpMode {
             if (gamepad2.left_bumper) {
                 intake.reverseintake();
             }
-            if (gamepad2.dpad_left) {
+            if (gamepad2.y) {
+                flywheel.shootPollen();
                 hood.pollenPos();
             }
-            if (gamepad2.dpad_right) {
+            if (gamepad2.x) {
+                flywheel.shootNectar();
                 hood.nectarPos();
             }
-            if (gamepad2.y) {
-                flywheel.flywheelon();
-            }
-            if (gamepad2.a) {
-                flywheel.flywheeloff();
-            }
-            if (gamepad2.x) {
-                flywheel.bigFlywheel();
-            }
             if (gamepad1.dpadUpWasPressed()) {
-                hood.nectarPos += 5;
+                hood.nectarPos += 0.02;
+                hood.nectarPos();
             }
             if (gamepad1.dpadDownWasPressed()) {
-                hood.nectarPos -= 5;
+                hood.nectarPos -= 0.02;
+                hood.nectarPos();
+
+            }
+            if (gamepad1.rightBumperWasPressed()) {
+                flywheel.updateFlywheelSpeedUp();
+            }
+            if (gamepad1.leftBumperWasPressed()) {
+                flywheel.updateFlywheelSpeedDown();
             }
             telemetry.addData("flywheel speed", flywheel.getFlywheelSpeed());
-            telemetry.addData("hoodpos", hood.getHoodPos());
+            telemetry.addData("hoodpos", "%.2f", hood.getHoodPos());
+            telemetry.addData("target hood", "%.2f", hood.nectarPos);
+
             telemetry.addData("feeder speed", feeder.getFeederSpeed());
             telemetry.update();
         }

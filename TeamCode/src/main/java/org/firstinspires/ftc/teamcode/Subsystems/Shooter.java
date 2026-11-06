@@ -13,8 +13,9 @@ import com.seattlesolvers.solverslib.controller.PIDFController;
 public class Shooter {
 
     private DcMotorEx flywheel;
-    double shootingSpeed = 1300;
-    double idleSpeed = 1060;
+    double nectarSpeed = 0;
+    double pollenSpeed = 0;
+    double idleSpeed = 0;
 
 
     public Shooter(HardwareMap hwMap, boolean isRamen) {
@@ -22,8 +23,12 @@ public class Shooter {
 
         if (isRamen) {
             flywheel.setDirection(DcMotorEx.Direction.REVERSE);
+            nectarSpeed = 1260;
+            pollenSpeed = 1060;
         } else {
             flywheel.setDirection(DcMotorEx.Direction.REVERSE);
+            nectarSpeed = 1420;
+            pollenSpeed = 1080;
         }
 
         flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -39,8 +44,14 @@ public class Shooter {
             flywheel.setVelocityPIDFCoefficients(100, 0, 0, 17.8);
         }
 
+    public void shootNectar() {
+        flywheel.setVelocity(nectarSpeed);
+    }
+    public void shootPollen() {
+        flywheel.setVelocity(pollenSpeed);
+    }
     public void shoot() {
-        flywheel.setVelocity(shootingSpeed);
+        flywheel.setVelocity(nectarSpeed);
     }
     public void idle() {
         flywheel.setVelocity(idleSpeed);
@@ -52,10 +63,12 @@ public class Shooter {
     public double getFlywheelSpeed() {return flywheel.getVelocity();}
     public double getFlywheelData() {return  flywheel.getCurrentPosition();}
     public void updateFlywheelSpeedUp() {
-        shootingSpeed = shootingSpeed + 50;
+        nectarSpeed += 5;
+        flywheel.setVelocity(nectarSpeed);
     }
     public void updateFlywheelSpeedDown() {
-        shootingSpeed = shootingSpeed - 50;
+        nectarSpeed -= 5;
+        flywheel.setVelocity(nectarSpeed);
     }
     public void update() {}
     public void flywheelon() {
@@ -65,6 +78,6 @@ public class Shooter {
         flywheel.setPower(0);
     }
     public void bigFlywheel() {
-        flywheel.setVelocity(shootingSpeed);
+        flywheel.setVelocity(nectarSpeed);
     }
 }
