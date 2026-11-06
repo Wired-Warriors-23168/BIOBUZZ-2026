@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 @TeleOp(name="FinalTeleOp", group="Linear OpMode")
 public class FinalTeleOp extends LinearOpMode {
 
-    boolean isRamen = true;
+    boolean isRamen = false;
 
     @Override
     public void runOpMode() {
@@ -27,7 +27,7 @@ public class FinalTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            drive.updateDrive(
+            drive.driveRobotCentric(
                     -gamepad1.left_stick_y,
                     gamepad1.left_stick_x,
                     gamepad1.right_stick_x

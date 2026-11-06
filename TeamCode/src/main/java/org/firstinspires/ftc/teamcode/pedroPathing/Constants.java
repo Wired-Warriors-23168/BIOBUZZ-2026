@@ -5,12 +5,13 @@ import com.pedropathing.algorithm.ForesightConfig;
 import com.pedropathing.controllers.Controller;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Matrix;
+import com.pedropathing.math.Pose;
 import com.pedropathing.math.Vector2D;
 import com.pedropathing.revhub.drivetrains.Mecanum;
 import com.pedropathing.revhub.drivetrains.MecanumConfig;
-import com.pedropathing.revhub.localizers.PinpointConfig;
-import com.pedropathing.revhub.localizers.PinpointLocalizer;
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import com.pedropathing.revhub.localizers.OTOSConfig;
+import com.pedropathing.revhub.localizers.OTOSLocalizer;
+import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -23,30 +24,24 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  */
 public class Constants {
     public static MecanumConfig drivetrainConfig = new MecanumConfig(c -> {
-        c.frontLeftName.set("lf");
-        c.backLeftName.set("lr");
-        c.frontRightName.set("rf");
-        c.backRightName.set("rr");
-
-        c.frontLeftDirection.set(DcMotorSimple.Direction.REVERSE);
-        c.backLeftDirection.set(DcMotorSimple.Direction.REVERSE);
-        c.frontRightDirection.set(DcMotorSimple.Direction.FORWARD);
-        c.backRightDirection.set(DcMotorSimple.Direction.FORWARD);
-
-        c.powerThreshold.set(0.01);
-        c.manualBrakeMode.set(false);
+        c.frontLeftName.set("front_left_drive");
+        c.frontRightName.set("front_right_drive");
+        c.backLeftName.set("back_left_drive");
+        c.backRightName.set("back_right_drive");
+        c.frontLeftDirection.set(DcMotorSimple.Direction.FORWARD);
+        c.frontRightDirection.set(DcMotorSimple.Direction.REVERSE);
+        c.backLeftDirection.set(DcMotorSimple.Direction.FORWARD);
+        c.backRightDirection.set(DcMotorSimple.Direction.REVERSE);
     });
 
-    public static PinpointConfig localizerConfig = new PinpointConfig(c -> {
-        c.name.set("pinpoint");
-        c.xPodOffset.set(-5.0);
-        c.yPodOffset.set(0.5);
-        c.offsetUnits.set(DistanceUnit.INCH);
-        c.globalDistanceUnit.set(DistanceUnit.INCH);
-        c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
-        c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
-    });
+    public static OTOSConfig localizerConfig = new OTOSConfig(c -> {
+        c.name.set("otos");
+        c.linearScalar.set(0.9638298094089263);
+        c.angularScalar.set(0.9045561827994133);
+        c.offset.set(new Pose(-0.0, -0.0));
+        c.linearUnit.set(DistanceUnit.INCH);
+    }
+);
 
     public static ForesightConfig foresightConfig = new ForesightConfig(c -> {
         // The end constraints (timeoutConstraint etc.) that decide when FollowPathCommand and HoldPointCommand finish
@@ -77,7 +72,7 @@ public class Constants {
 
     public static Follower createFollower(HardwareMap hardwareMap) {
         return new Follower(
-                new PinpointLocalizer(hardwareMap, localizerConfig),
+                new OTOSLocalizer(hardwareMap, localizerConfig),
                 new Mecanum(hardwareMap, drivetrainConfig),
                 new Foresight(foresightConfig)
         );

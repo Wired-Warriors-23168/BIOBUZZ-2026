@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Hood {
     private Servo hood;
-    double pollenPos = 0;
-    double nectarPos = 270;
+    double pollenPos = 200;
+    double nectarPos = 135;
     public Hood(HardwareMap hwMap) {
         hood = hwMap.get(Servo.class, "hood");
         hood.scaleRange(0, 270);
@@ -19,12 +19,12 @@ public class Hood {
         hood.scaleRange(0, 270);
         if (isRamen) {
             hood.setDirection(Servo.Direction.FORWARD);
-            pollenPos = 0;
-            nectarPos = 270;
+            pollenPos = 200;
+            nectarPos = 135;
         } else {
             hood.setDirection(Servo.Direction.FORWARD);
-            pollenPos = 0;
-            nectarPos = 270;
+            pollenPos = 200;
+            nectarPos = 135;
         }
     }
     public void nectarPos() {

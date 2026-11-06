@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -37,15 +38,20 @@ public class FieldCentricDrive {
         frontRightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         backRightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
+        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         if (isRamen) {
             frontLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
             backLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
             frontRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
             backRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
         } else {
-            frontLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+            frontLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
             backLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
-            frontRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
+            frontRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
             backRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
         }
         // encoder ticks per second, will be very small values
