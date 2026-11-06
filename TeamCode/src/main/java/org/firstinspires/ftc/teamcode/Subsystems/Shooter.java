@@ -27,8 +27,8 @@ public class Shooter {
             pollenSpeed = 1060;
         } else {
             flywheel.setDirection(DcMotorEx.Direction.REVERSE);
-            nectarSpeed = 1420;
-            pollenSpeed = 1080;
+            nectarSpeed = 1400;
+            pollenSpeed = 1120;
         }
 
         flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

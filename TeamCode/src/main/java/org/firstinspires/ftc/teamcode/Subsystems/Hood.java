@@ -24,8 +24,8 @@ public class Hood {
         } else {
             hood.setDirection(Servo.Direction.FORWARD);
             downPos = 0.36;
-            pollenPos = 0.66;
-            nectarPos = 0.66;
+            pollenPos = 0.84;
+            nectarPos = 0.52;
         }
     }
     public void nectarPos() {

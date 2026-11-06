@@ -36,12 +36,11 @@ public class Constants {
 
     public static OTOSConfig localizerConfig = new OTOSConfig(c -> {
         c.name.set("otos");
-        c.linearScalar.set(0.9638298094089263);
-        c.angularScalar.set(0.9045561827994133);
-        c.offset.set(new Pose(-0.0, -0.0));
+        c.linearScalar.set(0.9784654812637766);
+        c.angularScalar.set(0.9961316603461035);
+        c.offset.set(new Pose(0.16820712352362205, -0.018022191806102362, Math.PI));
         c.linearUnit.set(DistanceUnit.INCH);
-    }
-);
+    });
 
     public static ForesightConfig foresightConfig = new ForesightConfig(c -> {
         // The end constraints (timeoutConstraint etc.) that decide when FollowPathCommand and HoldPointCommand finish
