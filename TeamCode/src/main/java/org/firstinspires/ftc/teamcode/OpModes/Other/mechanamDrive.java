@@ -20,7 +20,7 @@ public class mechanamDrive extends LinearOpMode {
     private DcMotor rightDrive = null;
     private DcMotor rightFrontDrive = null;
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -49,7 +49,7 @@ public class mechanamDrive extends LinearOpMode {
             double leftFrontPower;
             double rightPower;
             double rightFrontPower;
-
+            wait(1000);
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
