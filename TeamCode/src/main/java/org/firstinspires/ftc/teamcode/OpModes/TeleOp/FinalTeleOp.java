@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 @TeleOp(name="FinalTeleOp", group="Linear OpMode")
 public class FinalTeleOp extends LinearOpMode {
 
-    boolean isRamen = false;
+    boolean isRamen = true;
 
     @Override
     public void runOpMode() {
@@ -53,6 +53,9 @@ public class FinalTeleOp extends LinearOpMode {
                 feeder.gateoff();
                 feeder.feederOff();
             }
+            if (gamepad2.left_bumper) {
+                intake.reverseintake();
+            }
             if (gamepad2.dpad_left) {
                 hood.pollenPos();
             }
@@ -68,7 +71,14 @@ public class FinalTeleOp extends LinearOpMode {
             if (gamepad2.x) {
                 flywheel.bigFlywheel();
             }
+            if (gamepad1.dpadUpWasPressed()) {
+                hood.nectarPos += 5;
+            }
+            if (gamepad1.dpadDownWasPressed()) {
+                hood.nectarPos -= 5;
+            }
             telemetry.addData("flywheel speed", flywheel.getFlywheelSpeed());
+            telemetry.addData("hoodpos", hood.getHoodPos());
             telemetry.addData("feeder speed", feeder.getFeederSpeed());
             telemetry.update();
         }

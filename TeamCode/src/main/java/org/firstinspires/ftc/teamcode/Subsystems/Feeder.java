@@ -9,7 +9,7 @@ public class Feeder {
 
     private DcMotorEx feedermotor;
     private DcMotorEx gatemotor;
-    double feederSpeed = 1000;
+    double feederSpeed = 1200;
     double gateSpeed = 800;
     double reverseSpeed = -800;
 

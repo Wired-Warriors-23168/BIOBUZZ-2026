@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Hood {
     private Servo hood;
     double pollenPos = 200;
-    double nectarPos = 135;
+    public double nectarPos = 135;
     public Hood(HardwareMap hwMap) {
         hood = hwMap.get(Servo.class, "hood");
         hood.scaleRange(0, 270);

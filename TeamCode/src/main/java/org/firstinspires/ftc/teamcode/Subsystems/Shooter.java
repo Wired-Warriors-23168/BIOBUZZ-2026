@@ -14,7 +14,7 @@ public class Shooter {
 
     private DcMotorEx flywheel;
     double shootingSpeed = 1300;
-    double idleSpeed = 1020;
+    double idleSpeed = 1060;
 
 
     public Shooter(HardwareMap hwMap, boolean isRamen) {

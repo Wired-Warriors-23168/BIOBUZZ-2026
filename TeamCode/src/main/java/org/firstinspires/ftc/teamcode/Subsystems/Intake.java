@@ -13,6 +13,7 @@ public class Intake {
     private CRServo left;
     private CRServo right;
     double intakeSpeed = 4500;
+    double reverseIntake = -1000;
 
     public Intake(HardwareMap hwMap) {
 
@@ -61,6 +62,9 @@ public class Intake {
         intake.setVelocity(intakeSpeed);
         left.setPower(1.0);
         right.setPower(1.0);
+    }
+    public void reverseintake() {
+        intake.setVelocity(reverseIntake);
     }
 
     public double getIntakeSpeed() {return intake.getVelocity();}
