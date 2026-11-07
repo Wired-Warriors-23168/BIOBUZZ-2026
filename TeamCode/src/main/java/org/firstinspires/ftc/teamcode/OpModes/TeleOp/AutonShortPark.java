@@ -61,6 +61,8 @@ public class AutonShortPark extends LinearOpMode {
             return;
         }
 
+        follower.follow(path1);
+
      //   flywheel.flywheelon();
      //   flywheel.shootPollen();
      //   hood.pollenPos();
