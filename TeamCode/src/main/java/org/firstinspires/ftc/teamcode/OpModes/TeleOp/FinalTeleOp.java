@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 @TeleOp(name="FinalTeleOp", group="Linear OpMode")
 public class FinalTeleOp extends LinearOpMode {
 
-    boolean isRamen = false;
+    boolean isRamen = true;
 
     @Override
     public void runOpMode() {
