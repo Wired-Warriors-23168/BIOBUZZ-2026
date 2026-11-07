@@ -49,6 +49,7 @@ public class AutonShortPark extends LinearOpMode {
         // Set the starting position
         follower.setPose(start);
 
+
         telemetry.addLine("Autonomous initialized");
         telemetry.addLine("Waiting for start");
         telemetry.update();
@@ -60,6 +61,8 @@ public class AutonShortPark extends LinearOpMode {
             follower.update();
             return;
         }
+
+        follower.follow(path1);
 
      //   flywheel.flywheelon();
      //   flywheel.shootPollen();
