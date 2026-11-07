@@ -11,7 +11,7 @@ public class Feeder {
     private DcMotorEx gatemotor;
     double feederSpeed = 1200;
     double gateSpeed = 800;
-    double reverseSpeed = -800;
+    double reverseSpeed = -1100;
 
 
     public Feeder(HardwareMap hwMap, boolean isRamen) {

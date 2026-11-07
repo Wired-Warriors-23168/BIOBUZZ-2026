@@ -42,33 +42,26 @@ public class Constants {
         c.linearUnit.set(DistanceUnit.INCH);
     });
 
-    public static ForesightConfig foresightConfig = new ForesightConfig(c -> {
-        // The end constraints (timeoutConstraint etc.) that decide when FollowPathCommand and HoldPointCommand finish
-        // also go here, see https://pedropathing.com/docs/pathing/reference/endconstraints
-
-        Controller primaryTranslationalForward = Controller.proportional(0.3);
-        Controller secondaryTranslationalForward = Controller.proportional(0.1);
-        Controller primaryTranslationalLateral = Controller.proportional(0.3);
-        Controller secondaryTranslationalLateral = Controller.proportional(0.1);
-
-        c.forwardTranslational.set(Controller.piecewise(secondaryTranslationalForward).put(2.5, primaryTranslationalForward));
-        c.strafeTranslational.set(Controller.piecewise(secondaryTranslationalLateral).put(2.5, primaryTranslationalLateral));
-
-        c.coast.set(Controller.proportionalFeedforward(0.010978350889324107));
-        c.brake.set(Controller.proportionalFeedforward(0.008731598255925491));
-
-        c.headingFeedback.set(Controller.proportional(5.258721785960744));
-        c.headingBrakeCoefficients.set(Vector2D.cartesian(0.05642143125655298, 0.0063829525363003695));
-
-        c.linearBrakeCoefficients.set(Matrix.diag(0.10605894992901523, 0.08719146175596092));
-        c.quadraticBrakeCoefficients.set(Matrix.diag(0.0014663966976606565, 0.0013837064502458813));
-
-        c.maxAchievableForwardVelocity.set(72.72923108818539);
-        c.maxAchievableStrafeVelocity.set(52.34323936525474);
-        c.naturalForwardDeceleration.set(85.01144677379789);
-        c.naturalStrafeDeceleration.set(104.49787535782846);
-    });
-
+    public static ForesightConfig foresightConfig = new ForesightConfig(
+            c -> {
+                Controller primaryForward = Controller.proportional(0.41670872214239907);
+                Controller secondaryForward = Controller.proportional(0.1539627381694908);
+                Controller primaryLateral = Controller.proportional(0.6336262874162778);
+                Controller secondaryLateral = Controller.proportional(0.23410798239409575);
+                c.forwardTranslational.set(Controller.piecewise(secondaryForward).put(2.5, primaryForward));
+                c.strafeTranslational.set(Controller.piecewise(secondaryLateral).put(2.5, primaryLateral));
+                c.coast.set(Controller.proportionalFeedforward(0.012086716970138479));
+                c.brake.set(Controller.proportionalFeedforward(0.010273709424617706));
+                c.headingFeedback.set(Controller.proportional(.55));
+                c.headingBrakeCoefficients.set(Vector2D.cartesian(0.8893876196145848, -0.3058799535103024));
+                c.linearBrakeCoefficients.set(Matrix.diag(0.122461629, 0.052941006));
+                c.quadraticBrakeCoefficients.set(Matrix.diag(0.002392376, 0.003078965));
+                c.maxAchievableForwardVelocity.set(73.92014147685475);
+                c.maxAchievableStrafeVelocity.set(32.1646529306643);
+                c.naturalForwardDeceleration.set(30.683721262873863);
+                c.naturalStrafeDeceleration.set(75.54419156425315);
+            }
+    );
     public static Follower createFollower(HardwareMap hardwareMap) {
         return new Follower(
                 new OTOSLocalizer(hardwareMap, localizerConfig),

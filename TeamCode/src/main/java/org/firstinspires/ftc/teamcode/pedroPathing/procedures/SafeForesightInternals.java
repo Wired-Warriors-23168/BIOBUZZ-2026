@@ -1,7 +1,7 @@
 // Pedro Pathing Quickstart BSD-3-Clause-derived source, pinned to 4f33ef5bbbd99ebfe978f0b86046ca43469e2df2
 // Changes: finite motor/sensor guards, stop-on-exception, stop requests,
 // watchdog timeouts, and direction-aware braking thresholds.
-package org.firstinspires.ftc.teamcode.pedro.procedures;
+package org.firstinspires.ftc.teamcode.pedroPathing.procedures;
 
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.drivetrain.Drivetrain;

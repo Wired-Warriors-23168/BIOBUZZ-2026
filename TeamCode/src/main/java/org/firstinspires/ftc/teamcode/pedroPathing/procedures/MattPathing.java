@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedro.procedures;
+package org.firstinspires.ftc.teamcode.pedroPathing.procedures;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -87,20 +87,11 @@ public class MattPathing extends Procedure {
         double headingLinear = headingBraking.get(0);
         double headingQuadratic = headingBraking.get(1);
 
-        Inputs brakeDistanceInput = inputs("Braking-test distance",
-                "Forward/strafe braking test distance, at least 15 inches. Allow extra room beyond the nominal distance.");
-        Inputs.Field<Double> brakeDistance = brakeDistanceInput.d("Distance (in)")
-                .withDefault(36.0);
-        awaitInputs(brakeDistanceInput);
-        if (!Double.isFinite(brakeDistance.get())) abort("Braking distance must be finite.");
-        double safeDistance = Math.max(15.0, brakeDistance.get());
-
-        List<Double> forwardBraking = stageList(7, "Forward Braking",
-                new SafeForwardBraking(localizerFactory, drivetrainFactory,
-                        headingLinear, headingQuadratic, headingKp, safeDistance), 2, false, false);
-        List<Double> strafeBraking = stageList(8, "Strafe Braking",
-                new SafeStrafeBraking(localizerFactory, drivetrainFactory,
-                        headingLinear, headingQuadratic, headingKp, safeDistance), 2, false, false);
+        // Steps 7 and 8 are MANUAL: no robot motion is commanded for these stages.
+        // Reuse MattPathing checkpoints if present, otherwise ask for the four
+        // calibrated values already entered in Constants.java.
+        List<Double> forwardBraking = manualBrakingStage(7, "Forward Braking");
+        List<Double> strafeBraking = manualBrakingStage(8, "Strafe Braking");
 
         List<Double> forwardTranslational = stageList(9, "Forward Translational",
                 new SafeForwardTranslational(localizerFactory, drivetrainFactory),
@@ -159,6 +150,35 @@ public class MattPathing extends Procedure {
                 "        c.naturalStrafeDeceleration.set(" + strafeDeceleration + ");\n" +
                 "    }\n" +
                 ");");
+    }
+
+    /**
+     * Replaces moving braking identification tests with a checkpoint or a
+     * user-entered measurement. The inputs must come from the robot's own
+     * manual braking measurements (same distance/speed units).
+     * No drive commands are issued by this method.
+     */
+    private List<Double> manualBrakingStage(int step, String name)
+            throws InterruptedException {
+        List<Double> saved = load(step, name, false, false);
+        if (saved != null) return saved;
+
+        Inputs manual = inputs("Step " + step + ": " + name + " coefficients",
+                "No robot movement. Copy your measured LINEAR and QUADRATIC " +
+                "braking coefficients from Constants.java. They are not read automatically. " +
+                "The values will be saved as a MattPathing checkpoint.");
+        Inputs.Field<Double> linear = manual.d("Linear coefficient")
+                .withDefault(0.0);
+        Inputs.Field<Double> quadratic = manual.d("Quadratic coefficient")
+                .withDefault(0.0);
+        awaitInputs(manual);
+        List<Double> measured = List.of(linear.get(), quadratic.get());
+        checkValues(name, measured, false, false);
+        if (measured.get(0) == 0.0 && measured.get(1) == 0.0) {
+            abort(name + ": enter your measured coefficients; both cannot be zero.");
+        }
+        save(step, measured);
+        return measured;
     }
 
     private double stageDouble(int step, String name, TuningOpMode<Double> op,

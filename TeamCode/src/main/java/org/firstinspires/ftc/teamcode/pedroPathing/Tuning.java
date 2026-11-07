@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.procedures.OTOSTuner;
 import com.pedropathing.revhub.localizers.OTOSConfig;
 import com.pedropathing.math.Pose;
 import org.firstinspires.ftc.teamcode.pedroPathing.procedures.Tests;
-import org.firstinspires.ftc.teamcode.pedro.procedures.MattPathing;
+import org.firstinspires.ftc.teamcode.pedroPathing.procedures.MattPathing;
 
 /**
  * Pedro Pathing 3.0 AutoTune procedures.
