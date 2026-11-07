@@ -30,7 +30,7 @@ public class AutonLongParkShoot extends LinearOpMode {
     private final Pose start = poseFactory.of(56, 9, 90);
     private final Pose point1 = poseFactory.of(22.1258, 50.5924, 90);
     private final Pose point2 = poseFactory.of(14.1214, 89.2964, 101.6846);
-    boolean isRamen = true;
+    boolean isRamen = false;
 
 
 
