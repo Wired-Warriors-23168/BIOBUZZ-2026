@@ -24,7 +24,7 @@ public class AutonShortPark extends LinearOpMode {
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
     private final Pose start = poseFactory.of(9, 128, 0);
-    private final Pose point1 = poseFactory.of(9, 124, 0);
+    private final Pose point1 = poseFactory.of(13, 124, 0);
     boolean isRamen = true;
 
  //   Feeder feeder = new Feeder(hardwareMap, isRamen);
