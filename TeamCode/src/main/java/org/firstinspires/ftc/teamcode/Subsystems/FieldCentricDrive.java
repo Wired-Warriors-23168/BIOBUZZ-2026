@@ -23,6 +23,9 @@ public class FieldCentricDrive {
     double backRightSpeed;
     IMU imu;
 
+    double error = 0;
+    double kP = 1;
+
     double maxwheelspeed = 2400;
 
 
@@ -132,6 +135,10 @@ public class FieldCentricDrive {
         frontRightDrive.setVelocity(maxVelocity * (frontRightPower / maxPower));
         backLeftDrive.setVelocity(maxVelocity * (backLeftPower / maxPower));
         backRightDrive.setVelocity(maxVelocity * (backRightPower / maxPower));
+    }
+    public void autoAim() {
+        double rotatePower = kP * error;
+        driveRobotCentric(0, 0, rotatePower);
     }
 
     public void resetYaw() {

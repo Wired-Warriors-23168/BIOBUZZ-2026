@@ -35,6 +35,9 @@ public class FinalTeleOp extends LinearOpMode {
             if (gamepad1.yWasPressed()) {
                 drive.resetYaw();
             }
+            if (gamepad1.left_bumper) {
+                drive.autoAim();
+            }
             if (gamepad2.left_trigger>0.1) {
                 feeder.on();
                 intake.on();

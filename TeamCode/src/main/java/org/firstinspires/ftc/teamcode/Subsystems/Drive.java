@@ -23,7 +23,6 @@ public class Drive {
     double backRightSpeed;
     double maxwheelspeed = 2400;
 
-
     public Drive(HardwareMap hwMap) {
     
         frontLeftDrive = hwMap.get(DcMotorEx .class,"front_left_drive");
@@ -76,6 +75,8 @@ public class Drive {
 
 
         }
+
+
         public double[] getVelocities() {
             return new double[] {frontLeftDrive.getVelocity(), frontRightDrive.getVelocity(), backLeftDrive.getVelocity(), backRightDrive.getVelocity()};
         }
