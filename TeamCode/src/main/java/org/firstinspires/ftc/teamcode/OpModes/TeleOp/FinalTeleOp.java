@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.FieldCentricDrive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hood;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.Subsystems.Vision;
 
 @TeleOp(name="FinalTeleOp", group="Linear OpMode")
 public class FinalTeleOp extends LinearOpMode {
@@ -23,10 +24,17 @@ public class FinalTeleOp extends LinearOpMode {
         Shooter flywheel = new Shooter(hardwareMap, isRamen);
         FieldCentricDrive drive = new FieldCentricDrive(hardwareMap, isRamen);
         Hood hood = new Hood(hardwareMap, isRamen);
+        Vision vision = new Vision(hardwareMap);
         waitForStart();
 
         while (opModeIsActive()) {
-
+            vision.update();
+            telemetry.addData("connected", vision.limelight.isConnected());
+            telemetry.addData("time since lst update", vision.limelight.getTimeSinceLastUpdate());
+            telemetry.addData("tag IDs", vision.tagIDs());
+            telemetry.addData("tx", vision.getTx());
+            telemetry.addData("valid", vision.limelight.getLatestResult().isValid());
+            telemetry.addData("pipeline", vision.limelight.getStatus().getPipelineIndex());
             drive.driveRobotCentric(
                     -gamepad1.left_stick_y,
                     gamepad1.left_stick_x,
