@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Feeder;
 import org.firstinspires.ftc.teamcode.Subsystems.FieldCentricDrive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hood;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Subsystems.Ramp;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.Vision;
 
@@ -24,24 +25,34 @@ public class FinalTeleOp extends LinearOpMode {
         Shooter flywheel = new Shooter(hardwareMap, isRamen);
         FieldCentricDrive drive = new FieldCentricDrive(hardwareMap, isRamen);
         Hood hood = new Hood(hardwareMap, isRamen);
-        Vision vision = new Vision(hardwareMap);
+        Ramp ramp = new Ramp(hardwareMap, isRamen);
+        //Vision vision = new Vision(hardwareMap);
         waitForStart();
 
         while (opModeIsActive()) {
-            vision.update();
-            telemetry.addData("connected", vision.limelight.isConnected());
-            telemetry.addData("time since lst update", vision.limelight.getTimeSinceLastUpdate());
-            telemetry.addData("tag IDs", vision.tagIDs());
-            telemetry.addData("tx", vision.getTx());
-            telemetry.addData("valid", vision.limelight.getLatestResult().isValid());
-            telemetry.addData("pipeline", vision.limelight.getStatus().getPipelineIndex());
+//            vision.update();
+//            telemetry.addData("connected", vision.limelight.isConnected());
+//            telemetry.addData("time since lst update", vision.limelight.getTimeSinceLastUpdate());
+//            telemetry.addData("tag IDs", vision.tagIDs());
+//            telemetry.addData("tx", vision.getTx());
+//            telemetry.addData("valid", vision.limelight.getLatestResult().isValid());
+//            telemetry.addData("pipeline", vision.limelight.getStatus().getPipelineIndex());
             drive.driveRobotCentric(
                     -gamepad1.left_stick_y,
                     gamepad1.left_stick_x,
                     gamepad1.right_stick_x
             );
-            if (gamepad1.yWasPressed()) {
-                drive.resetYaw();
+            if (gamepad1.y) {
+                ramp.setRampPosUp();
+            }
+            if (gamepad1.a) {
+                ramp.setRampPosDown();
+            }
+            if (gamepad1.b) {
+
+            }
+            if (gamepad1.x) {
+
             }
             if (gamepad1.left_bumper) {
                 drive.autoAim();
