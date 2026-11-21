@@ -17,9 +17,9 @@ import org.firstinspires.ftc.teamcode.Subsystems.Vision;
 public class FinalTeleOp extends LinearOpMode {
 
     boolean isRamen = true;
-    SlewRateLimiter turnLimiter = new SlewRateLimiter(2.0);
-    SlewRateLimiter xLimiter = new SlewRateLimiter(2.0);
-    SlewRateLimiter yLimiter = new SlewRateLimiter(2.0);
+    SlewRateLimiter turnLimiter = new SlewRateLimiter(4.0);
+    SlewRateLimiter xLimiter = new SlewRateLimiter(4.0);
+    SlewRateLimiter yLimiter = new SlewRateLimiter(4.0);
 
 
     @Override
@@ -33,6 +33,8 @@ public class FinalTeleOp extends LinearOpMode {
         Ramp ramp = new Ramp(hardwareMap, isRamen);
         Vision vision = new Vision(hardwareMap);
         waitForStart();
+
+        ramp.setRampPosUp();
 
         while (opModeIsActive()) {
             vision.update();
