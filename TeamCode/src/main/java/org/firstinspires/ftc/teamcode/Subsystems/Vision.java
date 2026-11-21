@@ -10,6 +10,8 @@ public class Vision {
     double tx = 0;
     double distance;
 
+    int closepipeline = 0;
+    int farpipeline = 1;
     public Vision(HardwareMap hwMap) {
         limelight = hwMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(0);
@@ -20,20 +22,21 @@ public class Vision {
         return tx;
     }
 
-    String tags = "";
+    public void aimClose() {
+        limelight.pipelineSwitch(closepipeline);
+    }
+
+     public void aimFar() {
+         limelight.pipelineSwitch(farpipeline);
+     }
+
     public void update() {
         LLResult result = limelight.getLatestResult();
         tx = result.getTx();
 
-        tags = "";
         for (LLResultTypes.FiducialResult tag : result.getFiducialResults()) {
             tag.getCameraPoseTargetSpace();
-            tags = tags + tag.getFiducialId() + " ";
         }
 
-    }
-
-    public String tagIDs() {
-        return tags;
     }
 }

@@ -22,9 +22,7 @@ public class FieldCentricDrive {
     double backLeftSpeed;
     double backRightSpeed;
     IMU imu;
-
-    double error = 0;
-    double kP = 1;
+    double kP = 0.04;
 
     double maxwheelspeed = 2400;
 
@@ -94,7 +92,7 @@ public class FieldCentricDrive {
 
         imu = hwMap.get(IMU.class, "imu");
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection =
-                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
+                RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
         RevHubOrientationOnRobot.UsbFacingDirection usbDirection =
                 RevHubOrientationOnRobot.UsbFacingDirection.UP;
 
@@ -136,13 +134,18 @@ public class FieldCentricDrive {
         backLeftDrive.setVelocity(maxVelocity * (backLeftPower / maxPower));
         backRightDrive.setVelocity(maxVelocity * (backRightPower / maxPower));
     }
-    public void autoAim() {
-        double rotatePower = kP * error;
+    public void autoAim(double error) {
+        double rotatePower = kP * -error;
         driveRobotCentric(0, 0, rotatePower);
     }
 
     public void resetYaw() {
         imu.resetYaw();
+    }
+
+    public double getYaw() {
+        return imu.getRobotYawPitchRollAngles()
+                .getYaw(AngleUnit.DEGREES);
     }
     public double[] getVelocities() {
         return new double[] {frontLeftDrive.getVelocity(), frontRightDrive.getVelocity(), backLeftDrive.getVelocity(), backRightDrive.getVelocity()};

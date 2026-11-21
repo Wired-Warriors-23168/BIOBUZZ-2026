@@ -19,13 +19,13 @@ public class Hood {
         if (isRamen) {
             hood.setDirection(Servo.Direction.FORWARD);
             downPos = 0.02;
-            pollenPos = 0.50;
-            nectarPos = 0.1;
+            pollenPos = downPos + 0.48;
+            nectarPos = downPos + 0.08;
         } else {
             hood.setDirection(Servo.Direction.FORWARD);
-            downPos = 0.36;
-            pollenPos = 0.84;
-            nectarPos = 0.52;
+            downPos = 0.30;
+            pollenPos = downPos + 0.48;
+            nectarPos = downPos + 0.16;
         }
     }
     public void nectarPos() {

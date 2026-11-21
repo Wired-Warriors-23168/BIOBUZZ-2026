@@ -12,15 +12,18 @@ public class Ramp {
     double rampDownPos = 0.28;
 
     public Ramp(HardwareMap hwMap) {
-        rampLeft = hwMap.get(Servo.class, "rampleft");
+        rampLeft = hwMap.get(Servo.class, "leftRamp");
         rampLeft.setDirection(Servo.Direction.FORWARD);
-        rampRight = hwMap.get(Servo.class, "rampright");
+        rampRight = hwMap.get(Servo.class, "rightRamp");
         rampRight.setDirection(Servo.Direction.FORWARD);
     }
 
     public Ramp(HardwareMap hwMap, boolean isRamen) {
-        rampRight = hwMap.get(Servo.class, "rampright");
-        rampLeft = hwMap.get(Servo.class, "rampleft");
+        rampRight = hwMap.get(Servo.class, "rightRamp");
+        rampRight.setDirection(Servo.Direction.FORWARD);
+        rampLeft = hwMap.get(Servo.class, "leftRamp");
+        rampLeft.setDirection(Servo.Direction.REVERSE);
+
         if (isRamen) {
 
         } else {
@@ -28,11 +31,11 @@ public class Ramp {
         }
     }
     public void setRampPosUp() {
-        rampRight.setPosition(1);
+        rampRight.setPosition(0);
         rampLeft.setPosition(0);
     }
     public void setRampPosDown() {
-        rampRight.setPosition(1-rampDownPos);
+        rampRight.setPosition(rampDownPos);
         rampLeft.setPosition(rampDownPos);
     }
     public double getRampPos() {

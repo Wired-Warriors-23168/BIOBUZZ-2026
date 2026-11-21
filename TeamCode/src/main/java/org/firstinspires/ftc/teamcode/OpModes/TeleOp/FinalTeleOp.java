@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.seattlesolvers.solverslib.gamepad.SlewRateLimiter;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Feeder;
@@ -16,6 +17,10 @@ import org.firstinspires.ftc.teamcode.Subsystems.Vision;
 public class FinalTeleOp extends LinearOpMode {
 
     boolean isRamen = true;
+    SlewRateLimiter turnLimiter = new SlewRateLimiter(2.0);
+    SlewRateLimiter xLimiter = new SlewRateLimiter(2.0);
+    SlewRateLimiter yLimiter = new SlewRateLimiter(2.0);
+
 
     @Override
     public void runOpMode() {
@@ -26,21 +31,21 @@ public class FinalTeleOp extends LinearOpMode {
         FieldCentricDrive drive = new FieldCentricDrive(hardwareMap, isRamen);
         Hood hood = new Hood(hardwareMap, isRamen);
         Ramp ramp = new Ramp(hardwareMap, isRamen);
-        //Vision vision = new Vision(hardwareMap);
+        Vision vision = new Vision(hardwareMap);
         waitForStart();
 
         while (opModeIsActive()) {
-//            vision.update();
-//            telemetry.addData("connected", vision.limelight.isConnected());
-//            telemetry.addData("time since lst update", vision.limelight.getTimeSinceLastUpdate());
-//            telemetry.addData("tag IDs", vision.tagIDs());
-//            telemetry.addData("tx", vision.getTx());
-//            telemetry.addData("valid", vision.limelight.getLatestResult().isValid());
-//            telemetry.addData("pipeline", vision.limelight.getStatus().getPipelineIndex());
-            drive.driveRobotCentric(
-                    -gamepad1.left_stick_y,
-                    gamepad1.left_stick_x,
-                    gamepad1.right_stick_x
+            vision.update();
+            telemetry.addData("tx", vision.getTx());
+            telemetry.addData("yaw", drive.getYaw());
+
+            double lefty = yLimiter.calculate(gamepad1.left_stick_y);
+            double leftx = xLimiter.calculate(gamepad1.left_stick_x);
+            double rightx = turnLimiter.calculate(gamepad1.right_stick_x);
+            drive.updateDrive(
+                (lefty > 0) ? -lefty * lefty : lefty * lefty,
+                (leftx > 0) ? leftx * leftx : -leftx * leftx,
+                (rightx > 0) ? rightx * rightx : -rightx * rightx
             );
             if (gamepad1.y) {
                 ramp.setRampPosUp();
@@ -51,11 +56,22 @@ public class FinalTeleOp extends LinearOpMode {
             if (gamepad1.b) {
 
             }
-            if (gamepad1.x) {
-
+            if (gamepad1.xWasPressed()) {
+                drive.resetYaw();
+            }
+            if (gamepad1.leftBumperWasPressed()) {
+                vision.aimClose();
+                vision.update();
             }
             if (gamepad1.left_bumper) {
-                drive.autoAim();
+                drive.autoAim(vision.getTx());
+            }
+            if (gamepad1.rightBumperWasPressed()) {
+                vision.aimFar();
+                vision.update();
+            }
+            if (gamepad1.right_bumper) {
+                drive.autoAim(vision.getTx());
             }
             if (gamepad2.left_trigger>0.1) {
                 feeder.on();
@@ -93,14 +109,8 @@ public class FinalTeleOp extends LinearOpMode {
             if (gamepad1.dpadDownWasPressed()) {
                 hood.nectarPos -= 0.02;
                 hood.nectarPos();
+            }
 
-            }
-            if (gamepad1.rightBumperWasPressed()) {
-                flywheel.updateFlywheelSpeedUp();
-            }
-            if (gamepad1.leftBumperWasPressed()) {
-                flywheel.updateFlywheelSpeedDown();
-            }
             telemetry.addData("flywheel speed", flywheel.getFlywheelSpeed());
             telemetry.addData("hoodpos", "%.2f", hood.getHoodPos());
             telemetry.addData("target hood", "%.2f", hood.nectarPos);
