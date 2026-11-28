@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
+import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.gamepad.SlewRateLimiter;
@@ -10,13 +11,14 @@ import org.firstinspires.ftc.teamcode.Subsystems.FieldCentricDrive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hood;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Ramp;
+import org.firstinspires.ftc.teamcode.Subsystems.FlowerMechanism;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.Vision;
 
 @TeleOp(name="FinalTeleOp", group="Linear OpMode")
 public class FinalTeleOp extends LinearOpMode {
 
-    boolean isRamen = true;
+    boolean isRamen = false;
     SlewRateLimiter turnLimiter = new SlewRateLimiter(4.0);
     SlewRateLimiter xLimiter = new SlewRateLimiter(4.0);
     SlewRateLimiter yLimiter = new SlewRateLimiter(4.0);
@@ -32,6 +34,10 @@ public class FinalTeleOp extends LinearOpMode {
         Hood hood = new Hood(hardwareMap, isRamen);
         Ramp ramp = new Ramp(hardwareMap, isRamen);
         Vision vision = new Vision(hardwareMap);
+        FlowerMechanism flower = new FlowerMechanism(hardwareMap, isRamen);
+
+//        Follower follower = Constants.create(hardwareMap);
+
         waitForStart();
 
         ramp.setRampPosUp();
@@ -40,11 +46,12 @@ public class FinalTeleOp extends LinearOpMode {
             vision.update();
             telemetry.addData("tx", vision.getTx());
             telemetry.addData("yaw", drive.getYaw());
+            telemetry.addData("pipeline", vision.limelight.getStatus().getPipelineIndex());
 
             double lefty = yLimiter.calculate(gamepad1.left_stick_y);
             double leftx = xLimiter.calculate(gamepad1.left_stick_x);
             double rightx = turnLimiter.calculate(gamepad1.right_stick_x);
-            drive.updateDrive(
+            drive.driveRobotCentric(
                 (lefty > 0) ? -lefty * lefty : lefty * lefty,
                 (leftx > 0) ? leftx * leftx : -leftx * leftx,
                 (rightx > 0) ? rightx * rightx : -rightx * rightx
@@ -55,8 +62,11 @@ public class FinalTeleOp extends LinearOpMode {
             if (gamepad1.a) {
                 ramp.setRampPosDown();
             }
-            if (gamepad1.b) {
-
+            if (gamepad2.dpad_down) {
+                flower.setFlowerPosUp();
+            }
+            if (gamepad2.dpad_up) {
+                flower.setFlowerPosDown();
             }
             if (gamepad1.xWasPressed()) {
                 drive.resetYaw();
@@ -104,13 +114,15 @@ public class FinalTeleOp extends LinearOpMode {
                 flywheel.shootNectar();
                 hood.nectarPos();
             }
+
+
             if (gamepad1.dpadUpWasPressed()) {
-                hood.nectarPos += 0.02;
-                hood.nectarPos();
+                intake.updateFlywheelSpeedUp();
+                intake.on();
             }
             if (gamepad1.dpadDownWasPressed()) {
-                hood.nectarPos -= 0.02;
-                hood.nectarPos();
+                intake.updateFlywheelSpeedDown();
+                intake.on();
             }
 
             telemetry.addData("flywheel speed", flywheel.getFlywheelSpeed());

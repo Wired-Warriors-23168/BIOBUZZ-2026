@@ -19,7 +19,7 @@ public class MecanumPIDTuner extends LinearOpMode {
 
     // EDIT THESE TO MATCH YOUR ROBOT CONFIGURATION
     private static final String[] MOTOR_NAMES = {
-            "frontLeft", "frontRight", "backLeft", "backRight"
+            "front_left_drive", "front_right_drive", "back_left_drive", "back_right_drive"
     };
 
     private static final String[] LABELS = {

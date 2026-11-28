@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 @TeleOp(name = "Motor PIDF Tuner")
 public class PIDTuner extends LinearOpMode {
 
-    private static final String MOTOR_NAME = "testMotor";
+    private static final String MOTOR_NAME = "intakeRoller";
 
     private volatile double p, i, d, f;
     private volatile double targetVelocity = 0;

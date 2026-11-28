@@ -10,58 +10,60 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Intake {
 
     private DcMotorEx intake;
-    private CRServo left;
-    private CRServo right;
-    double intakeSpeed = 4500;
-    double reverseIntake = -1000;
+  //  private CRServo left;
+  //  private CRServo right;
+    double intakeSpeed = 300;
+    double reverseIntake = -300;
 
     public Intake(HardwareMap hwMap) {
 
         intake = hwMap.get(DcMotorEx.class, "intakeRoller");
-        left = hwMap.get(CRServo.class, "leftIntake");
-        right = hwMap.get(CRServo.class, "rightIntake");
+     //   left = hwMap.get(CRServo.class, "leftIntake");
+       // right = hwMap.get(CRServo.class, "rightIntake");
 
         intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         intake.setDirection(DcMotorEx.Direction.FORWARD);
-        //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
-        left.setDirection(CRServo.Direction.REVERSE);
-        right.setDirection(CRServo.Direction.FORWARD);
+        intake.setVelocityPIDFCoefficients(100, 0, 0, 68);
+    //    left.setDirection(CRServo.Direction.REVERSE);
+    //    right.setDirection(CRServo.Direction.FORWARD);
     }
 
     public Intake(HardwareMap hwMap, boolean isRamen) {
 
         intake = hwMap.get(DcMotorEx.class, "intakeRoller");
-        left = hwMap.get(CRServo.class, "leftIntake");
-        right = hwMap.get(CRServo.class, "rightIntake");
+    //    left = hwMap.get(CRServo.class, "leftIntake");
+    //    right = hwMap.get(CRServo.class, "rightIntake");
 
         intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         //        flywheel.setVelocityPIDFCoefficients(0.002, 0, 0, 0.2);
 
         if (isRamen) {
-            intake.setDirection(DcMotorEx.Direction.FORWARD);
-            left.setDirection(CRServo.Direction.REVERSE);
-            right.setDirection(CRServo.Direction.FORWARD);
+            intake.setDirection(DcMotorEx.Direction.REVERSE);
+            intake.setVelocityPIDFCoefficients(100, 0, 0, 68);
+        //    left.setDirection(CRServo.Direction.REVERSE);
+        //    right.setDirection(CRServo.Direction.FORWARD);
         } else {
-            intake.setDirection(DcMotorEx.Direction.FORWARD);
-            left.setDirection(CRServo.Direction.REVERSE);
-            right.setDirection(CRServo.Direction.FORWARD);
+            intake.setDirection(DcMotorEx.Direction.REVERSE);
+            intake.setVelocityPIDFCoefficients(100, 0, 0, 68);
+        //    left.setDirection(CRServo.Direction.REVERSE);
+        //    right.setDirection(CRServo.Direction.FORWARD);
         }
     }
     
     public void off() {
 
         intake.setPower(0);
-        left.setPower(0);
-        right.setPower(0);
+    //    left.setPower(0);
+    //    right.setPower(0);
     }
     public void on() {
         intake.setVelocity(intakeSpeed);
-        left.setPower(1.0);
-        right.setPower(1.0);
+    //    left.setPower(1.0);
+    //    right.setPower(1.0);
     }
     public void reverseintake() {
         intake.setVelocity(reverseIntake);
